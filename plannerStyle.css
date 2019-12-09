@@ -1,0 +1,22 @@
+td {
+    height: 150px;
+    width: 75px;
+}
+ table { 
+     padding: 0px;
+     table-layout: fixed;
+     margin-top: 10px;
+ }
+
+ body {
+    font-family: 'Quicksand', sans-serif;
+ }
+
+ h1 {
+     text-align: center;
+ }
+
+ span {
+     margin: 10px;
+ }
+ 
