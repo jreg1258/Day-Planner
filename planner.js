@@ -77,12 +77,26 @@ var chosenYear = document.querySelector("#chosenYear")
             var selectedYear = e.target.textContent
             chosenYear.textContent = selectedYear
         })
-    
-
+  
+        
+var clock = setInterval(function() { 
     if (chosenYear.textContent!==""&&chosenMonth.textContent!=="") {
-    var combinedCalendar = chosenMonth.textContent && chosenYear.textContent
+        var combinedCalendar = chosenMonth.textContent+" "+chosenYear.textContent
+        
+        var dt = new Date(combinedCalendar)
+           // GET THE MONTH AND YEAR OF THE SELECTED DATE.
+           var month = dt.getMonth(),
+               year = dt.getFullYear();
+
+       // GET THE FIRST AND LAST DATE OF THE MONTH.
+       var FirstDay = new Date(year, month, 1);
+       var LastDay = new Date(year, month + 1, 0);
+       
+       console.log(FirstDay,LastDay)
+        clearInterval(clock)
+         }},1000)
+
     
-    }
 
 
 
