@@ -13,6 +13,8 @@ for (let index = 0; index < tableCells.length; index++) {
     })
 }
 
+
+
 var dropdownMonthMenu = document.getElementById("dropdownmonthmenu")
 var dropdownYearMenu = document.getElementById("dropdownyearmenu")
 
@@ -29,8 +31,8 @@ const yearDropdownFill = () => {
        
     for (var i=0;i<years.length;i++) {
     var thisYear = years[i]    
-        document.createElement("a")
-    var yearDropdownItem = document.createElement("a")
+        document.createElement("button")
+    var yearDropdownItem = document.createElement("button")
         yearDropdownItem.setAttribute("class","dropdown-item")
         yearDropdownItem.setAttribute("href","#")
         yearDropdownItem.setAttribute("name", "year")
@@ -43,8 +45,8 @@ function monthDropdownFill() {
 
     for (var i=0;i<months.length;i++) {
     var thisMonth = months[i]
-        document.createElement("a")
-    var dropdownItem = document.createElement("a")
+        document.createElement("button")
+    var dropdownItem = document.createElement("button")
         dropdownItem.setAttribute("class","dropdown-item")
         dropdownItem.setAttribute("href","#")
         dropdownItem.setAttribute("name", "month")
@@ -58,31 +60,29 @@ yearsArray()
 yearDropdownFill()
 
 
-
-var monthButtons = [document.getElementsByName("month")]
-var yearButtons = [document.getElementsByName("year")]
 var chosenMonth = document.querySelector("#chosenMonth")
-var chosenYear = document.querySelector("#Year")
+var chosenYear = document.querySelector("#chosenYear")
 
-function monthDropdownListeners() {
-    for(var i=0;i<monthButtons.length;i++) {
-        addEventListener("click", function(e){
+
+
+        dropdownMonthMenu.addEventListener("click", function(e){
             var selectedMonth = e.target.textContent
             chosenMonth.textContent = selectedMonth
-
         })
-    }
-}
+    
 
-function yearDropdownListeners() {
-    for(var i=0;i<yearButtons.length;i++) {
-        addEventListener("click", function(f){
-            var selectedYear = f.target.textContent
+
+        dropdownYearMenu.addEventListener("click", function(e){
+           
+            var selectedYear = e.target.textContent
             chosenYear.textContent = selectedYear
         })
+    
+
+    if (chosenYear.textContent!==""&&chosenMonth.textContent!=="") {
+    var combinedCalendar = chosenMonth.textContent && chosenYear.textContent
+    
     }
-}
-console.log(monthButtons)
-console.log(yearButtons)
-monthDropdownListeners()
-yearDropdownListeners()
+
+
+
