@@ -64,8 +64,13 @@ var calCells = document.querySelectorAll("td")
 function createCalendar() {
 for (var i=0;i<calCells.length;i++) {
     if (calendar.firstDay===i) {
-        console.log("hey")
-        calCells[i].textContent = dateArray[0]
+        for (var j=0;j<dateArray.length;j++) {
+            
+            calCells[i].textContent = dateArray[j]
+            console.log("hey")
+            i++
+        }
+        
     }
     }}
 
