@@ -55,9 +55,28 @@ function monthDropdownFill() {
     }
 }
 
+
+
+
+var dayHeaders = [document.getElementsByTagName("th")]
+var calCells = document.querySelectorAll("td")
+
+function createCalendar() {
+for (var i=0;i<calCells.length;i++) {
+    if (calendar.firstDay===i) {
+        console.log("hey")
+        calCells[i].textContent = dateArray[0]
+    }
+    }}
+
+
+
+
+
 monthDropdownFill()
 yearsArray()
 yearDropdownFill()
+
 
 
 var chosenMonth = document.querySelector("#chosenMonth")
@@ -78,25 +97,42 @@ var chosenYear = document.querySelector("#chosenYear")
             chosenYear.textContent = selectedYear
         })
   
-        
-var clock = setInterval(function() { 
-    if (chosenYear.textContent!==""&&chosenMonth.textContent!=="") {
-        var combinedCalendar = chosenMonth.textContent+" "+chosenYear.textContent
-        
-        var dt = new Date(combinedCalendar)
-           // GET THE MONTH AND YEAR OF THE SELECTED DATE.
-           var month = dt.getMonth(),
-               year = dt.getFullYear();
+var dateArray = []
 
-       // GET THE FIRST AND LAST DATE OF THE MONTH.
-       var FirstDay = new Date(year, month, 1);
-       var LastDay = new Date(year, month + 1, 0);
-       
-       console.log(FirstDay,LastDay)
-        clearInterval(clock)
-         }},1000)
 
+function getDates(startDate,stopDate) {
+    var currentDate = moment(startDate);
+    var stopDate = moment(stopDate);
+    while (currentDate <= stopDate) {
+        dateArray.push( moment(currentDate).format('MMMM DD, YYYY') )
+        currentDate = moment(currentDate).add(1, 'days');
+    }
+    console.log(dateArray);
+}
     
+var calendar = new Object()     
+            calendar.clock = setInterval(function() { 
+                if (chosenYear.textContent!==""&&chosenMonth.textContent!=="") {
+                    calendar.combinedCalendar = chosenMonth.textContent+" "+chosenYear.textContent;
+                    
+                    calendar.dt = new Date(calendar.combinedCalendar);
+                    // GET THE MONTH AND YEAR OF THE SELECTED DATE.
+                    calendar.month = calendar.dt.getMonth();
+                    calendar.year = calendar.dt.getFullYear();
+
+                // GET THE FIRST AND LAST DATE OF THE MONTH.
+                    calendar.FirstDay = new Date(calendar.year, calendar.month, 1);
+                    calendar.LastDay = new Date(calendar.year, calendar.month + 1, 0);
+                    getDates(calendar.FirstDay, calendar.LastDay)
+                    calendar.firstDay = calendar.FirstDay.getDay(firstOfMonth)
+                    console.log(calendar.firstDay)
+                    console.log(calendar.FirstDay,calendar.LastDay)
+                    createCalendar()    
+                    clearInterval(calendar.clock)
+                        
+                    }
+                     return
+                        },1000)
 
 
-
+                        var firstOfMonth = new Date(dateArray[0])
