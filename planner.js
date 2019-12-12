@@ -9,6 +9,9 @@ var calCells = document.querySelectorAll("td")
 var years = []
 var dateArray = []
 var firstOfMonth = new Date(dateArray[0])
+var modalT = document.querySelector("#modalLabel")
+var form = document.querySelector('#form');
+
 
 function yearsArray() {
     var dateStart = moment()
@@ -127,20 +130,31 @@ $("td").attr("data-toggle","modal")
 
 $("#modal").on("shown.bs.modal", function (event) {
     $('#myInput').trigger('focus')
-    JSON.parse(localStorage.getItem(title))
     var button = $(event.relatedTarget); // Button that triggered the modal 
     var modal  = $(this);
     var title = button.attr("value")
     modal.find('.modal-title').text(title)
-})
+    
+    if (localStorage.getItem(title)!==null) {
+        var data = JSON.parse(localStorage.getItem(title))
+        var inputs = Array.prototype.slice.call(document.querySelectorAll("input"));
+          
+          Object.keys(data).map(function(dataItem) {
+            inputs.map(function (inputItem) {
+              if(inputItem.name === dataItem){
+                   inputItem.value = data[dataItem]
+                } else{false};
+            })});
+    }else{$(this).removeData()}
 
+    
 
-// Get form, item, and wishlist
-var modalT = document.querySelector("#modalLabel")
-var title = modalT.textContent
-var form = document.querySelector('#form');
-var wishlistItem = document.querySelectorAll('#message-text');
-var wishlist = JSON.stringify(wishlistItem)
+   })
+
+$("#modal").on('hidden.bs.modal', function(){
+    $(this).find("form")[0].reset();
+});
+
 
 const isValidElement = element => {
     return element.name && element.value;
@@ -158,7 +172,7 @@ function handleFormSubmit(event){
   
     // Stop the form from submitting since we’re handling that with AJAX.
     event.preventDefault();
-  
+    var title = modalT.textContent
     // Call our function to get the form data.
     const data = formToJSON(form.elements);
   
