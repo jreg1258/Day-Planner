@@ -122,25 +122,53 @@ yearDropdownFill()
 $("td").attr("data-target","#modal")
 $("td").attr("data-toggle","modal")
 
+
+
+
 $("#modal").on("shown.bs.modal", function (event) {
     $('#myInput').trigger('focus')
-    alert(localStorage.getItem(title))
+    JSON.parse(localStorage.getItem(title))
     var button = $(event.relatedTarget); // Button that triggered the modal 
     var modal  = $(this);
     var title = button.attr("value")
     modal.find('.modal-title').text(title)
 })
 
-$('#modal').on('hidden.bs.modal', function (event) {
-    event.preventDefault()
-    var modalT = document.querySelector("#modalLabel")
-    var title = modalT.textContent
-    var modalObj = {
-        time : document.querySelectorAll(".col-form-label").values(),
-        event : document.querySelectorAll(".form-control").values()
-    }
 
-    localStorage.setItem(title, JSON.stringify(modalObj))
-    // do something...
-  })
-                        
+// Get form, item, and wishlist
+var modalT = document.querySelector("#modalLabel")
+var title = modalT.textContent
+var form = document.querySelector('#form');
+var wishlistItem = document.querySelectorAll('#message-text');
+var wishlist = JSON.stringify(wishlistItem)
+
+const isValidElement = element => {
+    return element.name && element.value;
+  };
+
+const formToJSON = elements => [].reduce.call(elements, (data, element) => {
+
+    if (isValidElement(element)) {
+    data[element.name] = element.value;
+}
+    return data;
+  }, {});
+  
+function handleFormSubmit(event){
+  
+    // Stop the form from submitting since we’re handling that with AJAX.
+    event.preventDefault();
+  
+    // Call our function to get the form data.
+    const data = formToJSON(form.elements);
+  
+    // Demo only: print the form data onscreen as a formatted JSON object.
+  
+    // Use `JSON.stringify()` to make the output valid, human-readable JSON.
+    localStorage.setItem(title,(JSON.stringify(data, null, "  ")));
+  
+    // ...this is where we’d actually do something with the form data...
+  };
+  
+  var save = document.querySelector("#save-button")
+  save.addEventListener("click",handleFormSubmit);
