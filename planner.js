@@ -11,7 +11,7 @@ var dateArray = []
 var firstOfMonth = new Date(dateArray[0])
 var modalT = document.querySelector("#modalLabel")
 var form = document.querySelector('#form');
-
+var save = document.querySelector("#save-button")
 
 function yearsArray() {
     var dateStart = moment()
@@ -69,8 +69,7 @@ function getDates(startDate,stopDate) {
         }}
 
 function clearCal() {
-    $("td").empty()
-    
+    $("td").empty() 
 }
 
 for (let index = 0; index < tableCells.length; index++) {
@@ -84,35 +83,24 @@ for (let index = 0; index < tableCells.length; index++) {
     })}
 
 
-dropdownMonthMenu.addEventListener("click", function(e){
-            var selectedMonth = e.target.textContent
-            chosenMonth.textContent = selectedMonth
-        })
-    
-
-dropdownYearMenu.addEventListener("click", function(e){
-            var selectedYear = e.target.textContent
-            chosenYear.textContent = selectedYear
-        })
-  
 
 var calendar = new Object()     
             calendar.clock = setInterval(function() { 
                 if (chosenYear.textContent!==""&&chosenMonth.textContent!=="") {
                     calendar.combinedCalendar = chosenMonth.textContent+" "+chosenYear.textContent;
                     dateArray = []
-                    clearCal()
+                        clearCal()
                     calendar.dt = new Date(calendar.combinedCalendar);
                     // GET THE MONTH AND YEAR OF THE SELECTED DATE.
                     calendar.month = calendar.dt.getMonth();
                     calendar.year = calendar.dt.getFullYear();
 
-                // GET THE FIRST AND LAST DATE OF THE MONTH.
+                    // GET THE FIRST AND LAST DATE OF THE MONTH.
                     calendar.FirstDay = new Date(calendar.year, calendar.month, 1);
                     calendar.LastDay = new Date(calendar.year, calendar.month + 1, 0);
-                    getDates(calendar.FirstDay, calendar.LastDay)
+                        getDates(calendar.FirstDay, calendar.LastDay)
                     calendar.firstDay = calendar.FirstDay.getDay(firstOfMonth)   
-                    createCalendar()
+                        createCalendar()
                     chosenMonth.textContent = ""
                     chosenYear.textContent = ""
                     }},1000)
@@ -134,7 +122,7 @@ $("#modal").on("shown.bs.modal", function (event) {
     var modal  = $(this);
     var title = button.attr("value")
     modal.find('.modal-title').text(title)
-    
+
     if (localStorage.getItem(title)!==null) {
         var data = JSON.parse(localStorage.getItem(title))
         var inputs = Array.prototype.slice.call(document.querySelectorAll("input"));
@@ -145,44 +133,41 @@ $("#modal").on("shown.bs.modal", function (event) {
                    inputItem.value = data[dataItem]
                 } else{false};
             })});
-    }else{$(this).removeData()}
+    }})
 
-    
-
-   })
-
-$("#modal").on('hidden.bs.modal', function(){
+   $("#modal").on('hidden.bs.modal', function(){
     $(this).find("form")[0].reset();
 });
 
 
-const isValidElement = element => {
+var isValidElement = element => {
     return element.name && element.value;
-  };
+};
 
-const formToJSON = elements => [].reduce.call(elements, (data, element) => {
-
+var formToJSON = elements => [].reduce.call(elements, (data, element) => {
     if (isValidElement(element)) {
     data[element.name] = element.value;
-}
-    return data;
-  }, {});
+    }return data;
+}, {});
   
 function handleFormSubmit(event){
-  
-    // Stop the form from submitting since we’re handling that with AJAX.
     event.preventDefault();
     var title = modalT.textContent
-    // Call our function to get the form data.
-    const data = formToJSON(form.elements);
-  
-    // Demo only: print the form data onscreen as a formatted JSON object.
-  
-    // Use `JSON.stringify()` to make the output valid, human-readable JSON.
+    var data = formToJSON(form.elements);
     localStorage.setItem(title,(JSON.stringify(data, null, "  ")));
-  
-    // ...this is where we’d actually do something with the form data...
   };
   
-  var save = document.querySelector("#save-button")
-  save.addEventListener("click",handleFormSubmit);
+
+
+save.addEventListener("click",handleFormSubmit);
+  
+dropdownMonthMenu.addEventListener("click", function(e){
+    var selectedMonth = e.target.textContent
+    chosenMonth.textContent = selectedMonth
+})
+
+
+dropdownYearMenu.addEventListener("click", function(e){
+    var selectedYear = e.target.textContent
+    chosenYear.textContent = selectedYear
+})
