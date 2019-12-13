@@ -57,6 +57,9 @@ for (var i=0;i<calCells.length;i++) {
         for (var j=0;j<dateArray.length;j++) {
             calCells[i].textContent = dateArray[j]
             calCells[i].setAttribute("value",dateArray[j])
+            if (moment(calCells[i].textContent, "MMMM DD, YYYY") < moment()){
+                calCells[i].setAttribute("class","table-danger")
+            }
             i++
         }}}}
 
@@ -80,6 +83,10 @@ for (let index = 0; index < tableCells.length; index++) {
 for (let index = 0; index < tableCells.length; index++) {
     tableCells[index].addEventListener("mouseout", function() {
         tableCells[index].removeAttribute("class", "table-primary")
+        if (moment(tableCells[index].textContent, "MMMM DD, YYYY") < moment()){
+            tableCells[index].setAttribute("class","table-danger")
+        }
+
     })}
 
 
