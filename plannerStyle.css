@@ -22,5 +22,15 @@ td {
 
  ul {
      float: left;
-     
+
+ }
+
+ @media (max-width: 766px) { 
+     table {
+         width: 560px;
+     }
+     td,th {
+         font-size: small;
+         text-align: left;
+     }
  }
